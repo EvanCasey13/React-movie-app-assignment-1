@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext  } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -13,14 +13,20 @@ import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import img from '../../images/film-poster-placeholder.png'
 import { Link } from "react-router-dom";
-import Avatar from '@mui/material/Avatar';
+import { MoviesContext } from "../../contexts/moviesContext";
 
-export default function ShowCard(props) {
-  const show = props.show;
+export default function ShowCard({ show, action }) {
+  const { favorites, addToFavorites } = useContext(MoviesContext);
+
+  if (favorites.find((id) => id === show.id)) {
+    show.favorite = true;
+  } else {
+    show.favorite = false
+  }
 
   const handleAddToFavorite = (e) => {
     e.preventDefault();
-    props.selectFavorite(show.id);
+    addToFavorites(show);
   };
 
   return (
@@ -52,15 +58,12 @@ export default function ShowCard(props) {
   </Grid>
 </CardContent>
 <CardActions disableSpacing>
-  <IconButton aria-label="add to favorites" onClick={handleAddToFavorite}>
-    <FavoriteIcon color="primary" fontSize="large" />
-  </IconButton>
-  <Link to={`/shows/${show.id}`}>
-    <Button variant="outlined" size="medium" color="primary">
-      More Info ...
-    </Button>
-  </Link>
-</CardActions>
+        <Link to={`/shows/${show.id}`}>
+          <Button variant="outlined" size="medium" color="primary">
+            More Info ...
+          </Button>
+        </Link>
+      </CardActions>
 </Card>
   );
 }

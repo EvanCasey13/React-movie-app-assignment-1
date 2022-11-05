@@ -86,13 +86,19 @@ export const getUpcomingMovies = () => {
         return json.results;
       });
   };
-  
+
   export const getPopularTV = () => {
     return fetch(
       `https://api.themoviedb.org/3/tv/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&page=1`
-    )
-      .then(res => res.json())
-      .then(json => json.results);
+    ).then((response) => {
+      if (!response.ok) {
+        throw new Error(response.json().message);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+       throw error
+    });
   };
 
   export const getPopularActors = () => {
@@ -109,8 +115,19 @@ export const getUpcomingMovies = () => {
     ).then(res => res.json());
   };
 
-  export const getShow= id => {
+  export const getShow = (args) => {
+    // console.log(args)
+    const [, idPart] = args.queryKey;
+    const { id } = idPart;
     return fetch(
       `https://api.themoviedb.org/3/tv/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}`
-    ).then(res => res.json());
+    ).then((response) => {
+      if (!response.ok) {
+        throw new Error(response.json().message);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw error
+   });
   };

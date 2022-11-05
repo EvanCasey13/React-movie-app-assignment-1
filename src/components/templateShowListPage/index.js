@@ -4,7 +4,7 @@ import FilterCard from "../filterShowCard";
 import ShowList from "../showList";
 import Grid from "@mui/material/Grid";
 
-function ShowListPageTemplate({ shows, name, selectFavorite }) {
+function ShowListPageTemplate({ shows, name, action }) {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
   const genreId = Number(genreFilter);
@@ -35,7 +35,7 @@ function ShowListPageTemplate({ shows, name, selectFavorite }) {
             genreFilter={genreFilter}
           />
         </Grid>
-        <ShowList selectFavorite={selectFavorite} shows={displayedShows}></ShowList>
+        <ShowList action={action} shows={displayedShows}></ShowList>
       </Grid>
     </Grid>
   );
