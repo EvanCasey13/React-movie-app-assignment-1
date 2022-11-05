@@ -26,12 +26,6 @@ const [movies, setMovies] = useState([]);
     console.log(movies.results)
 }
 
-useEffect(() => {
-    getMoviesSearch().then(movies => {
-      setMovies(movies);
-    });
-  }, []);
-
   // Redundant, but necessary to avoid app crashing.
   const favorites = movies.filter(m => m.favorite)
   localStorage.setItem('favorites', JSON.stringify(favorites))

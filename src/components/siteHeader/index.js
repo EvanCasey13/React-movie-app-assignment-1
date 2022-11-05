@@ -49,9 +49,9 @@ const SiteHeader = ( ) => {
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "TV Shows", path: "/shows/popular" },
     { label: "Actors", path: "/actors/popular" },
+    { label: "Search", path: "/search" },
     { label: "Register", path: "/register" },
-    { label: "Login", path: "/login" },
-    { label: "Search", path: "/search" }  ];
+    { label: "Login", path: "/login" },  ];
 
   const handleMenuSelect = (pageURL) => {
     navigate(pageURL, { replace: true });
