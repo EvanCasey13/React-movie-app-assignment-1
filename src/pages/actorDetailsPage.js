@@ -1,14 +1,25 @@
-import React, { useContext }from "react";
+import React from "react";
 import { useParams, Navigate } from 'react-router-dom';
 import ActorDetails from "../components/actorDetails";
 import PageTemplate from "../components/templateActorPage";
-import useActor from "../hooks/useActor";
-import AuthContext from "../AuthContext";
+import { getActor } from '../api/tmdb-api'
+import { useQuery } from "react-query";
+import Spinner from '../components/spinner'
 
 const ActorPage = (props) => {
   const { id } = useParams();
-  const [actor] = useActor(id);
-  
+  const { data: actor, error, isLoading, isError } = useQuery(
+    ["actor", { id: id }],
+    getActor
+  );
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>;
+  }
   return (
     <>
       {actor ? (
