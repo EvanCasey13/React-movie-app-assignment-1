@@ -50,7 +50,8 @@ const SiteHeader = ( ) => {
     { label: "TV Shows", path: "/shows/popular" },
     { label: "Actors", path: "/actors/popular" },
     { label: "Register", path: "/register" },
-    { label: "Login", path: "/login" },  ];
+    { label: "Login", path: "/login" },
+    { label: "Search", path: "/search" }  ];
 
   const handleMenuSelect = (pageURL) => {
     navigate(pageURL, { replace: true });

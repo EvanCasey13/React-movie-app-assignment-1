@@ -2,10 +2,10 @@ import React from "react";
 import PageTemplate from '../components/templateShowListPage'
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
-import { getPopularTV } from "../api/tmdb-api";
+import { getPopularTV, searchShow } from "../api/tmdb-api";
 
 const TvPopularPage = (props) => {
-  const {  data, error, isLoading, isError }  = useQuery('person/popular', getPopularTV)
+  const { data, error, isLoading, isError }  = useQuery('person/popular', getPopularTV)
 
   if (isLoading) {
     return <Spinner />
