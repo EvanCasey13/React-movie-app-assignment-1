@@ -52,6 +52,12 @@ const SiteHeader = ( ) => {
     { label: "Register", path: "/register" },
     { label: "Login", path: "/login" },  ];
 
+    const searchSubMenuOptions = [
+      { label: "Movies", path: "movies/search" },
+      { label: "Actors", path: "actors/search" },
+      { label: "TV Shows", path: "shows/search" }  
+    ];
+
   const handleMenuSelect = (pageURL) => {
     navigate(pageURL, { replace: true });
   };
@@ -62,10 +68,6 @@ const SiteHeader = ( ) => {
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
   };
 
   return (
@@ -143,12 +145,17 @@ const SiteHeader = ( ) => {
         }}
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
+        onClose={() => setAnchorEl(null)}
         TransitionComponent={Fade}
       >
-        <MenuItem onClick={handleClose}><Link underline="none" color="inherit" href="movies/search">Movies</Link></MenuItem>
-        <MenuItem onClick={handleClose}><Link underline="none" color="inherit" href="shows/search">TV Shows</Link></MenuItem>
-        <MenuItem onClick={handleClose}><Link underline="none" color="inherit" href="actors/search">Actors</Link></MenuItem>
+        {searchSubMenuOptions.map((opt) => (
+                    <MenuItem
+                      key={opt.label}
+                      onClick={() => handleMenuSelect(opt.path)}
+                    >
+                      {opt.label}
+                    </MenuItem>
+                  ))}
       </Menu>
                 {menuOptions.map((opt) => (
                   <Button
