@@ -11,6 +11,9 @@ import TvPopularPage from "./pages/tvPopularPage";
 import SearchPage from "./pages/searchPage";
 import ActorPopularPage from "./pages/actorsPage";
 import SiteHeader from './components/siteHeader'
+import Login from "./components/Login/Login";
+import Register from "./components/Register/Register";
+import Reset from "./components/Reset/Reset";
 import AddMovieReviewPage from './pages/addMovieReviewPage'
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
@@ -47,6 +50,9 @@ const App = () => {
       <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
       <Route path="/movies/:id" element={<MoviePage />} />
       <Route path="/search" element={<SearchPage />} />
+      <Route path="/login" element={<Login />} />
+      <Route exact path="/register" element={<Register />} />
+      <Route exact path="/reset" element={<Reset />} />
       <Route path="/" element={<HomePage />} />
       <Route path="*" element={ <Navigate to="/" /> } />
     </Routes>
