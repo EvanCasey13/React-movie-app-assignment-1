@@ -14,6 +14,8 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { auth, db, logout } from "../../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
+import Fade from '@mui/material/Fade';
+import Link from '@mui/material/Link';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
@@ -35,12 +37,10 @@ const SiteHeader = ( ) => {
       setName(data.name);
     } catch (err) {
       console.error(err);
-      alert("An error occured while fetching user data");
     }
   };
   useEffect(() => {
     if (loading) return;
-    if (!user) return navigate("/");
     fetchUserName();
   }, [user, loading]);
   const menuOptions = [
@@ -49,7 +49,6 @@ const SiteHeader = ( ) => {
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "TV Shows", path: "/shows/popular" },
     { label: "Actors", path: "/actors/popular" },
-    { label: "Search", path: "/search" },
     { label: "Register", path: "/register" },
     { label: "Login", path: "/login" },  ];
 
@@ -59,6 +58,14 @@ const SiteHeader = ( ) => {
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -119,6 +126,30 @@ const SiteHeader = ( ) => {
                     Logout
                     
                   </Button>
+        <Button
+        id="fade-button"
+        aria-controls={open ? 'fade-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+        color="inherit"
+      >
+        Search
+      </Button>
+      <Menu
+        id="fade-menu"
+        MenuListProps={{
+          'aria-labelledby': 'fade-button',
+        }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Fade}
+      >
+        <MenuItem onClick={handleClose}><Link underline="none" color="inherit" href="movies/search">Movies</Link></MenuItem>
+        <MenuItem onClick={handleClose}><Link underline="none" color="inherit" href="shows/search">TV Shows</Link></MenuItem>
+        <MenuItem onClick={handleClose}><Link underline="none" color="inherit" href="actors/search">Actors</Link></MenuItem>
+      </Menu>
                 {menuOptions.map((opt) => (
                   <Button
                     key={opt.label}

@@ -41,21 +41,6 @@ const ActorDetails = ({ actor }) => {  // Don't miss this!
             <Chip label={`Birth Place: ${actor.place_of_birth}`} />
         <Chip label={`Birthday: ${actor.birthday}`} />
       </Paper>
-
-
-      <Fab
-        color="secondary"
-        variant="extended"
-        onClick={() =>setDrawerOpen(true)}
-        sx={{
-          position: 'fixed',
-          bottom: '1em',
-          right: '1em'
-        }}
-      >
-        <NavigationIcon />
-        Reviews
-      </Fab>
       </>
   );
 };

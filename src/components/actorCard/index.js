@@ -5,8 +5,6 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import img from '../../images/film-poster-placeholder.png'
 import { Link } from "react-router-dom";
@@ -40,9 +38,6 @@ export default function ActorCard(props) {
   </Grid>
 </CardContent>
 <CardActions disableSpacing>
-  <IconButton aria-label="add to favorites" onClick={handleAddToFavorite}>
-    <FavoriteIcon color="primary" fontSize="large" />
-  </IconButton>
   <Link to={`/actors/${actor.id}`}>
     <Button variant="outlined" size="medium" color="primary">
       More Info ...

@@ -8,7 +8,9 @@ import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
 import ShowPage from "./pages/tvDetailsPage";
 import ActorPage from "./pages/actorDetailsPage";
 import TvPopularPage from "./pages/tvPopularPage";
-import SearchPage from "./pages/searchPage";
+import SearchMoviePage from "./pages/searchMoviePage";
+import SearchShowPage from "./pages/searchTVShowPage";
+import SearchActorPage from "./pages/searchActorPage";
 import ActorPopularPage from "./pages/actorsPage";
 import SiteHeader from './components/siteHeader'
 import Login from "./components/Login/Login";
@@ -49,7 +51,9 @@ const App = () => {
       <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
       <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
       <Route path="/movies/:id" element={<MoviePage />} />
-      <Route path="/search" element={<SearchPage />} />
+      <Route path="/movies/search" element={<SearchMoviePage />} />
+      <Route path="/shows/search" element={<SearchShowPage />} />
+      <Route path="/actors/search" element={<SearchActorPage />} />
       <Route path="/login" element={<Login />} />
       <Route exact path="/register" element={<Register />} />
       <Route exact path="/reset" element={<Reset />} />

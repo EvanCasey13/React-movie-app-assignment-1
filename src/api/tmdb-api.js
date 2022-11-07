@@ -156,20 +156,3 @@ export const getUpcomingMovies = () => {
       throw error
    });
   };
-
-  export const searchMovies = (args) => {
-    // console.log(args)
-    const [, searchTerm] = args.queryKey;
-    const { slug } = searchTerm;
-    return fetch(
-      `https://api.themoviedb.org/3/search/person?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&page=1&query=${slug}`
-    ).then((response) => {
-      if (!response.ok) {
-        throw new Error(response.json().message);
-      }
-      return response.json();
-    })
-    .catch((error) => {
-      throw error
-   });
-  };

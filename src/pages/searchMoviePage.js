@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { getMoviesSearch } from "../api/tmdb-api";
+import React, { useState } from "react";
 import PageTemplate from '../components/templateMovieListPage';
-import { useQuery } from 'react-query';
-import Spinner from '../components/spinner';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
 import TextField from "@mui/material/TextField";
 
-
-const SearchPage = (props) => {
+const SearchMoviePage = (props) => {
 
 const [movies, setMovies] = useState([]);
 
@@ -56,6 +52,5 @@ const [movies, setMovies] = useState([]);
 </div>
 );
 
-
 };
-export default SearchPage;
+export default SearchMoviePage;
