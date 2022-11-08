@@ -2,25 +2,28 @@ import React, { useState } from "react";
 import PageTemplate from '../components/templateMovieListPage';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
 import TextField from "@mui/material/TextField";
+import { useQuery } from 'react-query';
+import Spinner from '../components/spinner';
+import { searchMovies } from "../api/tmdb-api";
 
 const SearchMoviePage = (props) => {
 
-const [movies, setMovies] = useState([]);
+  const [searchTerm, setSearchTerm] = useState()
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value)
   }
 
-  const [searchTerm, setSearchTerm] = useState("")
-  const onSubmit = async (e) => {
-    e.preventDefault()
-    let slug = searchTerm.split(' ').join('-').toLowerCase()
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=7a15a517bd41f7a7bc491bce0ba12dd4&language=en-US&include_adult=false&page=1&query=${slug}`;
-    const data = await fetch(url);
-    const movies = await data.json();
-    setMovies(movies.results);
-    console.log(movies.results)
-}
+  const {  data, error, isLoading, isError }  = useQuery(['search/movies', searchTerm], () => searchMovies(searchTerm))
+
+  if (isLoading) {
+    return <Spinner />
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>
+  }  
+  const movies = data.results;
 
   // Redundant, but necessary to avoid app crashing.
   const favorites = movies.filter(m => m.favorite)
@@ -29,7 +32,7 @@ const [movies, setMovies] = useState([]);
   
   return (
     <div className="movies">
-    <form onSubmit={onSubmit}>
+    <form>
     <TextField
     id="filled-search"
     fullWidth 

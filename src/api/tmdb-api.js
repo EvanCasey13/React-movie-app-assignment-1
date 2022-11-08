@@ -12,6 +12,20 @@ export const getMovies = (page) => {
   });
 };
 
+export const searchMovies = (query) => {
+  return fetch(
+    `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=1&query=${query}`
+  ).then((response) => {
+    if (!response.ok) {
+      throw new Error(response.json().message);
+    }
+    return response.json();
+  })
+  .catch((error) => {
+     throw error
+  });
+};
+
 export const getUpcomingMovies = (page) => {
   return fetch(
     `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&page=${page}`
