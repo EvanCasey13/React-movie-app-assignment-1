@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import PageTemplate from '../components/templateActorListPage'
 import { getPopularActors } from "../api/tmdb-api";
 import Spinner from '../components/spinner';
+import Pagination from '@mui/material/Pagination';
 import { useQuery } from 'react-query';
 
 const ActorPopularPage = (props) => {
-  const {  data, error, isLoading, isError }  = useQuery('popular', getPopularActors)
+
+  const [activePage, setActivePage] = useState(1);
+
+  const handleChange = (event, value) => {
+    setActivePage(value);
+    console.log(value)
+  };
+
+  const {  data, error, isLoading, isError }  = useQuery(['popular', activePage], () => getPopularActors(activePage), { keepPreviousData: true })
 
   if (isLoading) {
     return <Spinner />
@@ -22,10 +31,23 @@ const ActorPopularPage = (props) => {
   const addToFavorites = (actorId) => true 
   
   return (
+    <div className="actorpage">
     <PageTemplate
       title="Discover Actors"
       actors={actors}
     />
+    <Pagination
+    count="100"
+    variant='outlined'
+    color='primary'
+    shape="rounded"
+    showFirstButton 
+    showLastButton
+    className='pagination'
+    page={activePage}
+    onChange={handleChange}
+  />
+  </div>
     );
 };
 export default ActorPopularPage;

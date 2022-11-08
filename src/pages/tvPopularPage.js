@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import PageTemplate from '../components/templateShowListPage'
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
-import { getPopularTV, searchShow } from "../api/tmdb-api";
+import Pagination from '@mui/material/Pagination';
+import { getPopularTV } from "../api/tmdb-api";
 
 const TvPopularPage = (props) => {
-  const { data, error, isLoading, isError }  = useQuery('person/popular', getPopularTV)
+
+  const [activePage, setActivePage] = useState(1);
+
+  const handleChange = (event, value) => {
+    setActivePage(value);
+    console.log(value)
+  };
+
+  const { data, error, isLoading, isError }  = useQuery(['tv/popular', activePage], () => getPopularTV(activePage), { keepPreviousData: true })
 
   if (isLoading) {
     return <Spinner />
@@ -22,10 +31,23 @@ const TvPopularPage = (props) => {
   const addToFavorites = (showId) => true 
   
   return (
+    <div className="tvpopularpage">
     <PageTemplate
       title="Discover TV Shows"
       shows={shows}
     />
+    <Pagination
+    count="100"
+    variant='outlined'
+    color='primary'
+    shape="rounded"
+    showFirstButton 
+    showLastButton
+    className='pagination'
+    page={activePage}
+    onChange={handleChange}
+  />
+  </div>
     );
 };
 export default TvPopularPage;

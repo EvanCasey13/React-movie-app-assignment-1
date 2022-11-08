@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { getUpcomingMovies } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
+import Pagination from '@mui/material/Pagination';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
 
 const UpcomingMoviesPage = (props) => {
 
-  const {  data, error, isLoading, isError }  = useQuery('upcoming', getUpcomingMovies)
+  const [activePage, setActivePage] = useState(1);
+
+  const handleChange = (event, value) => {
+    setActivePage(value);
+    console.log(value)
+  };
+
+  const {  data, error, isLoading, isError }  = useQuery(['upcoming', activePage], () => getUpcomingMovies(activePage), { keepPreviousData: true })
 
   if (isLoading) {
     return <Spinner />
@@ -25,6 +33,7 @@ const UpcomingMoviesPage = (props) => {
   console.log(mustwatch)
 
   return (
+    <div className="upcomingpage">
     <PageTemplate
       title="Upcoming Movies"
       movies={movies}
@@ -32,6 +41,18 @@ const UpcomingMoviesPage = (props) => {
         return <AddToFavoritesIcon movie={movie} />
       }}
     />
+    <Pagination
+    count="100"
+    variant='outlined'
+    color='primary'
+    shape="rounded"
+    showFirstButton 
+    showLastButton
+    className='pagination'
+    page={activePage}
+    onChange={handleChange}
+  />
+  </div>
 );
 
 };
