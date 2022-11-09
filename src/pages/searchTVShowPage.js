@@ -1,34 +1,39 @@
 import React, { useState } from "react";
 import PageTemplate from '../components/templateShowListPage';
 import TextField from "@mui/material/TextField";
+import { useQuery } from 'react-query';
+import Spinner from '../components/spinner';
+import { searchTVShows } from "../api/tmdb-api";
+import useDebounce from "../hooks/useDebounce"
 
 const SearchTVShowPage = (props) => {
 
-const [shows, setShows] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("")
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value)
+  }
 
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value)
-      }
-    
-      const [searchTerm, setSearchTerm] = useState("")
-      const onSubmit = async (e) => {
-        e.preventDefault()
-        let slug = searchTerm.split(' ').join('-').toLowerCase()
-        const url = `https://api.themoviedb.org/3/search/tv?api_key=7a15a517bd41f7a7bc491bce0ba12dd4&language=en-US&include_adult=false&page=1&query=${slug}`;
-        const data = await fetch(url);
-        const shows = await data.json();
-        setShows(shows.results);
-        console.log(shows.results)
-    }
+  const {  data, error, isLoading, isError }  = useQuery(['search/shows', { debouncedSearchTerm }], () => searchTVShows(debouncedSearchTerm), { enabled: !!debouncedSearchTerm})
+
+  if (isLoading) {
+    return <Spinner />
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>
+  }  
+  const shows = data?.results;
 
   // Redundant, but necessary to avoid app crashing.
-  const favorites = shows.filter(s => s.favorite)
+  const favorites = shows?.filter(s => s?.favorite)
   localStorage.setItem('favorites', JSON.stringify(favorites))
   const addToFavorites = (showId) => true 
   
   return (
     <div className="shows">
-    <form onSubmit={onSubmit}>
+    <form>
         <TextField
     id="filled-search"
     fullWidth 

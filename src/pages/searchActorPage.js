@@ -1,34 +1,39 @@
 import React, { useState } from "react";
 import PageTemplate from '../components/templateActorListPage';
 import TextField from "@mui/material/TextField";
+import { searchActors } from "../api/tmdb-api";
+import { useQuery } from 'react-query';
+import useDebounce from "../hooks/useDebounce"
+import Spinner from '../components/spinner';
 
 const SearchActorPage = (props) => {
 
-const [actors, setActors] = useState([]);
-
-const handleSearchChange = (e) => {
+  const [searchTerm, setSearchTerm] = useState("")
+  const debouncedSearchTerm = useDebounce(searchTerm, 1000);
+  
+  const handleSearchChange = (e) => {
     setSearchTerm(e.target.value)
   }
 
-  const [searchTerm, setSearchTerm] = useState("")
-  const onSubmit = async (e) => {
-    e.preventDefault()
-    let slug = searchTerm.split(' ').join('-').toLowerCase()
-    const url = `https://api.themoviedb.org/3/search/person?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&page=1&query=${slug}`;
-    const data = await fetch(url);
-    const actors = await data.json();
-    setActors(actors.results);
-    console.log(actors.results)
-}
+  const {  data, error, isLoading, isError }  = useQuery(['search/actors', { debouncedSearchTerm }], () => searchActors(debouncedSearchTerm), { enabled: !!debouncedSearchTerm})
+
+  if (isLoading) {
+    return <Spinner />
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>
+  }  
+  const actors = data?.results;
 
   // Redundant, but necessary to avoid app crashing.
-  const favorites = actors.filter(a => a.favorite)
+  const favorites = actors?.filter(a => a?.favorite)
   localStorage.setItem('favorites', JSON.stringify(favorites))
   const addToFavorites = (actorId) => true 
   
   return (
     <div className="actors">
-    <form onSubmit={onSubmit}>
+    <form>
         <TextField
     id="filled-search"
     fullWidth 
