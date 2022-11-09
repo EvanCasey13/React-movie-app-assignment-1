@@ -67,20 +67,6 @@ const ShowDetails = ({ show }) => {  // Don't miss this!
         />
         <Chip label={`Released: ${show.first_air_date}`} />
       </Paper>
-
-      <Fab
-        color="secondary"
-        variant="extended"
-        onClick={() =>setDrawerOpen(true)}
-        sx={{
-          position: 'fixed',
-          bottom: '1em',
-          right: '1em'
-        }}
-      >
-        <NavigationIcon />
-        Reviews
-      </Fab>
       </>
   );
 };

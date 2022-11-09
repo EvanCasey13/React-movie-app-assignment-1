@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import AuthContext from "../AuthContext";
+import { Navigate } from 'react-router-dom';
 import PageTemplate from '../components/templateMovieListPage';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
 import TextField from "@mui/material/TextField";
@@ -8,6 +10,7 @@ import { searchMovies } from "../api/tmdb-api";
 import useDebounce from "../hooks/useDebounce"
 
 const SearchMoviePage = (props) => {
+  const { user } = useContext(AuthContext);
 
   const [searchTerm, setSearchTerm] = useState("")
   const debouncedSearchTerm = useDebounce(searchTerm, 1000);
@@ -31,6 +34,10 @@ const SearchMoviePage = (props) => {
   const favorites = movies?.filter(m => m?.favorite)
   localStorage.setItem('favorites', JSON.stringify(favorites))
   const addToFavorites = (movieId) => true 
+
+  if (!user) {
+    return <Navigate replace to="/login" />;
+}
   
   return (
     <div className="movies">

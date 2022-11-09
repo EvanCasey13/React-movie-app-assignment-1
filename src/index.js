@@ -20,6 +20,7 @@ import AddMovieReviewPage from './pages/addMovieReviewPage'
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { createRoot } from "react-dom/client";
+import { AuthProvider } from "./AuthProvider";
 import MoviesContextProvider from "./contexts/moviesContext";
 
 const queryClient = new QueryClient({
@@ -39,13 +40,12 @@ const App = () => {
     <BrowserRouter>
     <SiteHeader />
     <MoviesContextProvider>
+    <AuthProvider>
     <Routes>
     <Route path="/shows/popular" element={<TvPopularPage />} />
       <Route path="/actors/popular" element={<ActorPopularPage />} />
-      <Route path="/actor/:page" element={<ActorPopularPage />} />
       <Route path="/actors/:id" element={<ActorPage />} />
       <Route path="/shows/:id" element={<ShowPage />} />
-      <Route path="/show/:page" element={<TvPopularPage />} />
       <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
       <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
       <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
@@ -60,6 +60,7 @@ const App = () => {
       <Route path="/" element={<HomePage />} />
       <Route path="*" element={ <Navigate to="/" /> } />
     </Routes>
+    </AuthProvider>
     </MoviesContextProvider>
   </BrowserRouter>
   <ReactQueryDevtools initialIsOpen={false} />

@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import AuthContext from "../AuthContext";
+import { Navigate } from 'react-router-dom';
 import PageTemplate from '../components/templateShowListPage'
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
@@ -6,6 +8,8 @@ import Pagination from '@mui/material/Pagination';
 import { getPopularTV } from "../api/tmdb-api";
 
 const TvPopularPage = (props) => {
+
+  const { user } = useContext(AuthContext);
 
   const [activePage, setActivePage] = useState(1);
 
@@ -29,6 +33,10 @@ const TvPopularPage = (props) => {
   const favorites = shows.filter(s => s.favorite)
   localStorage.setItem('favorites', JSON.stringify(favorites))
   const addToFavorites = (showId) => true 
+
+  if (!user) {
+    return <Navigate replace to="/login" />;
+}
   
   return (
     <div className="tvpopularpage">

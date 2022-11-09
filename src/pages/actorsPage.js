@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import AuthContext from "../AuthContext";
+import { Navigate } from 'react-router-dom';
 import PageTemplate from '../components/templateActorListPage'
 import { getPopularActors } from "../api/tmdb-api";
 import Spinner from '../components/spinner';
@@ -6,6 +8,8 @@ import Pagination from '@mui/material/Pagination';
 import { useQuery } from 'react-query';
 
 const ActorPopularPage = (props) => {
+
+  const { user } = useContext(AuthContext);
 
   const [activePage, setActivePage] = useState(1);
 
@@ -29,6 +33,10 @@ const ActorPopularPage = (props) => {
   const favorites = actors.filter(a => a.favorite)
   localStorage.setItem('favorites', JSON.stringify(favorites))
   const addToFavorites = (actorId) => true 
+
+  if (!user) {
+    return <Navigate replace to="/login" />;
+}
   
   return (
     <div className="actorpage">

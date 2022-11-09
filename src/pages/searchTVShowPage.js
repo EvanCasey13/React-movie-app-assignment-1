@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import AuthContext from "../AuthContext";
+import { Navigate } from 'react-router-dom';
 import PageTemplate from '../components/templateShowListPage';
 import TextField from "@mui/material/TextField";
 import { useQuery } from 'react-query';
@@ -7,6 +9,7 @@ import { searchTVShows } from "../api/tmdb-api";
 import useDebounce from "../hooks/useDebounce"
 
 const SearchTVShowPage = (props) => {
+  const { user } = useContext(AuthContext);
 
   const [searchTerm, setSearchTerm] = useState("")
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
@@ -30,6 +33,10 @@ const SearchTVShowPage = (props) => {
   const favorites = shows?.filter(s => s?.favorite)
   localStorage.setItem('favorites', JSON.stringify(favorites))
   const addToFavorites = (showId) => true 
+
+  if (!user) {
+    return <Navigate replace to="/login" />;
+}
   
   return (
     <div className="shows">

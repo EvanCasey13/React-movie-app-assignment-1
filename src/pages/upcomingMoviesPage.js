@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import AuthContext from "../AuthContext";
+import { Navigate } from 'react-router-dom';
 import { getUpcomingMovies } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from 'react-query';
@@ -7,6 +9,8 @@ import Pagination from '@mui/material/Pagination';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
 
 const UpcomingMoviesPage = (props) => {
+
+  const { user } = useContext(AuthContext);
 
   const [activePage, setActivePage] = useState(1);
 
@@ -31,6 +35,10 @@ const UpcomingMoviesPage = (props) => {
   localStorage.setItem('mustwatch', JSON.stringify(mustwatch))
   const addToMustWatch = (movieId) => true 
   console.log(mustwatch)
+
+  if (!user) {
+    return <Navigate replace to="/login" />;
+}
 
   return (
     <div className="upcomingpage">

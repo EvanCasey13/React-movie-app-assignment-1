@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import AuthContext from "../AuthContext";
 import { useParams, Navigate } from 'react-router-dom';
 import ShowDetails from "../components/showDetails/";
 import PageTemplate from "../components/templateShowPage";
@@ -7,6 +8,7 @@ import { useQuery } from "react-query";
 import Spinner from '../components/spinner'
 
 const ShowPage = (props) => {
+  const { user } = useContext(AuthContext);
   const { id } = useParams();
   const { data: show, error, isLoading, isError } = useQuery(
     ["show", { id: id }],
@@ -20,6 +22,10 @@ const ShowPage = (props) => {
   if (isError) {
     return <h1>{error.message}</h1>;
   }
+
+  if (!user) {
+    return <Navigate replace to="/login" />;
+}
 
   return (
     <>

@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import AuthContext from "../AuthContext";
+import { Navigate } from 'react-router-dom';
 import PageTemplate from '../components/templateActorListPage';
 import TextField from "@mui/material/TextField";
 import { searchActors } from "../api/tmdb-api";
@@ -7,6 +9,7 @@ import useDebounce from "../hooks/useDebounce"
 import Spinner from '../components/spinner';
 
 const SearchActorPage = (props) => {
+  const { user } = useContext(AuthContext);
 
   const [searchTerm, setSearchTerm] = useState("")
   const debouncedSearchTerm = useDebounce(searchTerm, 1000);
@@ -31,6 +34,10 @@ const SearchActorPage = (props) => {
   localStorage.setItem('favorites', JSON.stringify(favorites))
   const addToFavorites = (actorId) => true 
   
+  if (!user) {
+    return <Navigate replace to="/login" />;
+}
+
   return (
     <div className="actors">
     <form>
@@ -47,7 +54,7 @@ const SearchActorPage = (props) => {
         </form>
 
         <PageTemplate
-      title='Discover Actors'
+      name='Discover Actors'
       actors={actors}
     />
     </div>
