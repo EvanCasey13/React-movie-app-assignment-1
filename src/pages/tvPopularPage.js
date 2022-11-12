@@ -6,6 +6,7 @@ import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
 import Pagination from '@mui/material/Pagination';
 import { getPopularTV } from "../api/tmdb-api";
+import SiteHeader from './../components/siteHeader'
 
 const TvPopularPage = (props) => {
 
@@ -40,6 +41,7 @@ const TvPopularPage = (props) => {
   
   return (
     <div className="tvpopularpage">
+      <SiteHeader />
     <PageTemplate
       title="Discover TV Shows"
       shows={shows}

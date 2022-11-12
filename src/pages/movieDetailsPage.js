@@ -7,6 +7,7 @@ import PageTemplate from "../components/templateMoviePage";
 import { getMovie } from '../api/tmdb-api'
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner'
+import SiteHeader from './../components/siteHeader'
 
 const MoviePage = (props) => {
   const { user } = useContext(AuthContext);
@@ -31,7 +32,7 @@ const MoviePage = (props) => {
   return (
     <>
       {movie ? (
-        <>
+        <><SiteHeader />
           <PageTemplate movie={movie}>
             <MovieDetails movie={movie} />
           </PageTemplate>

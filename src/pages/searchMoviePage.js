@@ -8,6 +8,7 @@ import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
 import { searchMovies } from "../api/tmdb-api";
 import useDebounce from "../hooks/useDebounce"
+import SiteHeader from './../components/siteHeader'
 
 const SearchMoviePage = (props) => {
   const { user } = useContext(AuthContext);
@@ -41,6 +42,7 @@ const SearchMoviePage = (props) => {
   
   return (
     <div className="movies">
+      <SiteHeader />
     <form >
     <TextField
     id="filled-search"

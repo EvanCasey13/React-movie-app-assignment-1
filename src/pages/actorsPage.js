@@ -6,6 +6,7 @@ import { getPopularActors } from "../api/tmdb-api";
 import Spinner from '../components/spinner';
 import Pagination from '@mui/material/Pagination';
 import { useQuery } from 'react-query';
+import SiteHeader from './../components/siteHeader'
 
 const ActorPopularPage = (props) => {
 
@@ -40,6 +41,7 @@ const ActorPopularPage = (props) => {
   
   return (
     <div className="actorpage">
+      <SiteHeader />
     <PageTemplate
       title="Discover Actors"
       actors={actors}

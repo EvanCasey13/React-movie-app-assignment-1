@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 import PageTemplate from "../components/templateMoviePage";
 import MovieReview from "../components/movieReview";
+import SiteHeader from './../components/siteHeader'
 
 const MovieReviewPage = (props) => {
   const { user } = useContext(AuthContext);
@@ -15,9 +16,12 @@ const MovieReviewPage = (props) => {
 }
 
   return (
+    <div>
+    <SiteHeader />
     <PageTemplate movie={movie}>
       <MovieReview review={review} />
     </PageTemplate>
+    </div>
   );
 };
 

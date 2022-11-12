@@ -7,6 +7,7 @@ import { useQuery } from 'react-query';
 import Pagination from '@mui/material/Pagination';
 import Spinner from '../components/spinner';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
+import SiteHeader from './../components/siteHeader'
 
 const HomePage = (props) => {
 
@@ -41,7 +42,7 @@ const HomePage = (props) => {
   
   return (
     <div className="homepage">
-
+<SiteHeader />
     <PageTemplate
       title="Discover Movies"
       movies={movies}

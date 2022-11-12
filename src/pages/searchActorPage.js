@@ -7,6 +7,7 @@ import { searchActors } from "../api/tmdb-api";
 import { useQuery } from 'react-query';
 import useDebounce from "../hooks/useDebounce"
 import Spinner from '../components/spinner';
+import SiteHeader from './../components/siteHeader'
 
 const SearchActorPage = (props) => {
   const { user } = useContext(AuthContext);
@@ -40,6 +41,7 @@ const SearchActorPage = (props) => {
 
   return (
     <div className="actors">
+      <SiteHeader />
     <form>
         <TextField
     id="filled-search"

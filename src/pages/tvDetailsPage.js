@@ -6,6 +6,7 @@ import PageTemplate from "../components/templateShowPage";
 import { getShow } from '../api/tmdb-api'
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner'
+import SiteHeader from './../components/siteHeader'
 
 const ShowPage = (props) => {
   const { user } = useContext(AuthContext);
@@ -30,7 +31,7 @@ const ShowPage = (props) => {
   return (
     <>
       {show ? (
-        <>
+        <><SiteHeader />
           <PageTemplate show={show}>
             <ShowDetails show={show} />
           </PageTemplate>

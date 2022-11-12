@@ -6,6 +6,7 @@ import PageTemplate from "../components/templateActorPage";
 import { getActor } from '../api/tmdb-api'
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner'
+import SiteHeader from './../components/siteHeader'
 
 const ActorPage = (props) => {
   const { user } = useContext(AuthContext);
@@ -30,7 +31,7 @@ const ActorPage = (props) => {
   return (
     <>
       {actor ? (
-        <>
+        <><SiteHeader />
           <PageTemplate actor={actor}>
             <ActorDetails actor={actor} />
           </PageTemplate>

@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getMovie } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
+import SiteHeader from './../components/siteHeader'
 
 const WriteReviewPage = (props) => {
 
@@ -33,9 +34,11 @@ const WriteReviewPage = (props) => {
 }
 
   return (
+    <div><SiteHeader />
     <PageTemplate movie={movie}>
       <ReviewForm movie={movie} />
     </PageTemplate>
+    </div>
   );
 };
 

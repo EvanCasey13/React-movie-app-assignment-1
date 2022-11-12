@@ -8,6 +8,7 @@ import { getMovie } from "../api/tmdb-api";
 import Spinner from '../components/spinner'
 import RemoveFromFavorites from "../components/cardIcons/removeFromFavorites";
 import WriteReview from "../components/cardIcons/writeReview";
+import SiteHeader from './../components/siteHeader'
 
 const FavoriteMoviesPage = () => {
 
@@ -43,6 +44,8 @@ const FavoriteMoviesPage = () => {
 }
 
   return (
+    <div>
+    <SiteHeader />
     <PageTemplate
       title="Favorite Movies"
       movies={movies}
@@ -55,6 +58,7 @@ const FavoriteMoviesPage = () => {
         );
       }}
     />
+    </div>
   );
 };
 

@@ -12,7 +12,6 @@ import SearchMoviePage from "./pages/searchMoviePage";
 import SearchShowPage from "./pages/searchTVShowPage";
 import SearchActorPage from "./pages/searchActorPage";
 import ActorPopularPage from "./pages/actorsPage";
-import SiteHeader from './components/siteHeader'
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Reset from "./components/Reset/Reset";
@@ -38,7 +37,6 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
     <BrowserRouter>
-    <SiteHeader />
     <MoviesContextProvider>
     <AuthProvider>
     <Routes>
