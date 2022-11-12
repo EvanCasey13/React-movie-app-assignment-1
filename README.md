@@ -35,8 +35,6 @@ FAST_REFRESH=false
 
 ## API endpoints.
 
-[ List the __additional__ TMDB endpoints used, giving the description and pathname for each one.] 
-
 e.g.
 + Search for a movie - search/movie
 + Search for a actor - search/person
